@@ -1,0 +1,343 @@
+Array methods:
+	-	filter():	
+		-	This is an higher order function i.e., it requires another function (which returns boolean) as an argument.
+		-	If the function returns "truthy", then that element will be added to the returning array.
+		-	Syntax:	array.filter(function(currentElement, index(opt), arr(opt)), thisValue(opt));	// don't know what *thisValue* is..
+		-	e.g.,	let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+					function isEven(n) {
+					  return n % 2 == 0;
+					}
+					let filteredArr = arr.filter(isEven);
+					console.log(filteredArr);	// [ 2, 4, 6, 8 ]
+		-	The filter function will take each element from the array and pass it to the parameter function.
+				If the parameter function returns true based on the condition, then that element will be added to the filtered array/ result array.
+		-	In arrow function syntax, directly use the method inside filter().
+				"let filteredArr = arr.filter(ele => ele % 2 == 0);" - take each element and if *ele % 2 == 0* is true, put that element in the resulting array.
+		-	To even shorten the code, the condition can be *arr.filter(ele => !(ele % 2));* which returns either 0 or 1 always, so if x*2 returns 0 - means x is even, so 0 is taken as false.
+				Therefore !(false) will be true and the array will be filtered as required.
+	---------------------------------------------------
+	
+	-	map():
+		-	Syntax:	array.map(function(currentElement, index(opt), arr(opt)), thisValue(opt))
+		-	This method gives each element of the array to the defined function, which then does some logic on the element and returns some value.
+			This returned value is then added to a new array.
+		-	e.g.,	let x = name.map(ele => ele.fname + " " + ele.lname);
+	---------------------------------------------------
+	
+	-	reduce():
+		-	This reduces the elements of an array to a single value and returns it. It does not change the original array.
+		-	Syntax:	let finalValue = arr.reduce((accumulator, currentValue, currentIndex, theFullArray)=>{},initialValueToConsider);
+		-	The *accumulator* is the final value that'll be returned after going via all the elements in the array.
+		-	The *initialValueToConsider* is the value that the accumulator will be starting off with.
+				If this is not specified, the accumulator will take the first value in the array and start off.
+		-	Working: Takes the initial accumulator value and the current value, do some logics along with these two, after going via all the elements, return the final accumulator value.
+				Initially, the *initialValue* given or the first value of the array is taken as accumulator value.
+				After that, accumulator gets the value that is returned in the previous iteration.
+		-	If the *initialValue* is specified, the loop starts with index 0, with the accumulator taking the value of specified initial value.
+			If the *initialValue* is not specified, the accumulator takes the value of index 0 and the loop starts with index 1.
+		-	The fullArray is the full array that's always available for usage.
+		-	currentIndex and theFullArray is optional.
+		-	e.g.,
+					let str = ['v','i','n','a','y'];
+					let fname = str.reduce((ch, val)=>{
+						return ch+val;
+					});
+					console.log(fname);	//	vinay	-	It takes the first element and from starts adding next index values until the end.
+					
+					let n = [1,2,3,4,5,6,7,8,9];
+					let sum = n.reduce((acc,val)=>{
+						return acc+val
+					},0);
+					console.log(sum);	//	45	-	Accumulator takes initial value 0 and starts adding the elements to the accumulator.
+	---------------------------------------------------
+------------------------------------------------------------------------------------------------------
+	
+-	Array mutator methods:
+	-	arr.push(*elements*);	//	adds elements to the end of the array and returns the new length of the array.
+	-	arr.pop();	//	removes last element of an array and returns that element.
+	-	arr.shift();	//	removes first element of an array and returns that element.
+	-	arr.unshift(*elements*);	//	adds elements to the start of the array and returns the new length of the array.
+	-	arr.splice(startIndex, numberOfElements, *other optional elements to replace*);
+		//	this will remove the numberOfElements specified from the starting index, and replace them with the given extra elements if present, else just remove.
+		//	It returns the array of removed elements.
+	-	arr.sort();	//	sorts the array by character order, good for sorting strings but for numbers, needs a modification.
+		For numbers sort, pass a function that returns true or false, if true, change position (sort), else do not change the position (don't sort).
+			let arr = [9, 78, 5, 2, 5, 2, 1, 8, 4, 6, 7];
+			let returnedArr = arr.sort(numberSort);
+			function numberSort(a, b) {
+			  return a - b;
+			}
+		When the sort() method compares two values, it sends the values to the compare function, and sorts the values according to the returned (negative, zero, positive) value.
+		If returned value is negative, a is considered lower than b.
+		So if second element is greater then don't do any swapping.
+	-	arr.reverse();	//	reverses the elements in the array.	//	returns the reversed array.
+	-	arr.fill(valueToFill, startIndexOptional, endIndexOptional);	//	returns the new array with full elements.
+		//	If only value if specified, it fills the entire array with specified value. It'll replace any existing value in the array before fill.
+		//	If start Index is specified, from the start index till the end of the array, the value will be filled.
+		//	If start and end index is specified, the value will be filled from start index to the end-1 element. NOTE: endIndexOptional is not included.
+	-	arr.copyWithin(targetIndex, startIndexOptional, endIndexOptional);	//	returns the new array with full elements.
+		//	If only targetIndex is specified, it replaces the elements from that index with the entire array from the start. NOTE: doesnot change the length of the original array.
+			e.g.,	let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+					let u = arr.copyWithin(2);	//	[ 1, 2, 1, 2, 3, 4, 5, 6, 7 ]
+		//	If startIndex is specified, replaces elements from the target index with the elements from startIndex to the end of array.
+			e.g.,	let u = arr.copyWithin(2, 5);	//	[ 1, 2, 6, 7, 8, 9, 7, 8, 9 ]
+		//	If all are specified, replaces elements from target index with elements in the specified range. NOTE: endIndexOptional not included.
+------------------------------------------------------------------------------------------------------
+	
+-	When checking a condition in *if* and returning only true or false based on condition, you can just use the condition as the return value.
+	-	e.g.,	function isEven(n) {
+					if (n % 2 == 0) {return true;} 
+					else {return false;}
+				}
+				Instead of using if and else, use *return n % 2 == 0;*. It'll return true if the condition is true and false if condition is false.
+------------------------------------------------------------------------------------------------------
+	
+-	String methods and properties:
+	-	str.length property
+	-	str.indexOf("Vin"), .indexOf('y')	- returns the first index of first found occurance of given string.
+	-	str.lastIndexOf('a')	- returns the index of the last found occurance of the string.
+	-	str.startsWith("Vi"), endsWith('a');	- returns true or false based on the check.
+	-	str.includes('na'), returns true if that sequence of characters is found in the string.
+	-	str.slice(2,4), slices the string from first argument index to the second argument index BUT excluding the second argument index. Returns the sliced section of the string.
+						Negative numbers can be used to start from the end of the string. e.g., -1 is the last character in the string.
+						If no second argument is passed, it slices till the end of the string.
+	-	str.substring(3,8), similar to slice but cannot use negative numbers.
+	-	str.replace("originalString", "replaceingString"), the FIRST FOUND original string with the replacing string.
+	-	str.match(/[A-Z]/g), returns the array with details of the string mentioned or based on the regex used.
+	-	str.split(" "), splits the string at the mentioned character and returns the result in an array. If nothing is mentioned in the argument returns the same string.
+						If "" is mentioned in the argument, it splits at each characters and returns each character in an array.
+	-	str.repeat(count), repeats the string a given amount of time and returns it.
+	-	str.concat(" more message to follow."), concats given string to the original string and returns full string.
+	-	str.toUpperCase(), str.toLowerCase(), converts string to upper or lower case.
+	-	str.trim(), .trimLeft(), .trimStart(), .trimRight(), .trimEnd(), trims the white space character in the string.
+	-	str.padStart(7, '.'), .padEnd(7, '~'), first parameter is the desired length of resulting string. 
+												For padStart, it'll add the second parameter to fill the empty spaces in the resulting string.
+------------------------------------------------------------------------------------------------------
+	
+-	Pass by value vs Pass by reference:
+	-	Primitive data types such as numbers, boolean, strings, undefined, null are all passed by value and others such as arrays and objects are passed by reference.
+		e.g.,	let a = 10;
+				let b = a;	//	now changing b anywhere in the code, WILL NOT change a, as a's value 10 is given to b.
+				but,
+				let c = [1,2];
+				let d = c;
+				d.push(3);	//	here both d and c will have the new item '3'. When an array is assigned to the variable, the variable stores its location in memory.
+								and when that variable c is assigned to another variable d, even d will have the location of the original array, so any change will affect the original array.
+------------------------------------------------------------------------------------------------------
+
+-	Loops:	for, for-in, for-of, while, do-while, forEach, .map
+	-	for-in is used on objects. for(key in obj){console.log(`${key} => ${obj[key]}`)};
+		This iterates over the keyes in the object.
+	-	for-of is used on arrays and such. for(name of names){console.log(name)};
+		This iterates over all the items in the array.
+------------------------------------------------------------------------------------------------------
+
+-	THIS:
+	'this' when used inside a function declaration, always points to the global window object.
+	In object methods, the "this" keyword belongs to the outermost object.
+	e.g.,	let obj = {
+				name: "vinay",
+				isAlive: true,
+				someMethod: ()=>{
+					console.log(this);	//	{name:"vinay", isAlive:true}
+					
+					function innerFunc()=>{
+						console.log(this);	//	Window something something.......
+					}
+				}
+			}
+			
+			function somethingElse(){
+				console.log(this);	//	Window something something.......
+			}
+	'this' is only assigned its value when the object calls the method.
+------------------------------------------------------------------------------------------------------
+
+-	OBJECTS:
+	-	function constructor:
+			var Person = function(fname, lname, job){
+				this.fname = fname;
+				this.lname = lname;
+				this.job = job;
+				this.fullname = function(){
+					return `${this.fname} ${this.lname}`;
+				}
+			}
+		Note: 	Defining methods inside the constructor itself will cause creation of separate methods for each instance of this constructor, ie., every instance created will have its own copy of this function.
+				There is no use of each instance having a copy of the method which does the same for all.
+				
+				So instead define a method in the constructors prototype onject.
+				Person.prototype.fullname = function(){
+					return `${this.fname} ${this.lname}`;
+				}
+				
+				When a reference object (arrays, etc..) is used in a prototype object then any change to that property by any one instance will affect in all the instances as its a reference.
+				So such individual properties should be declared within the constructor function and common properties should be declared at the Object's prototype.
+				
+	-	Object.create():
+			var User = {};
+			
+			var vin1 = Object.create(User);	// create the object and then set its properties.
+			vin1.name = "vinay1";
+			vin1.age = 23;
+			
+			var vin2 = Object.create(User, {	// create object and set values immediately.
+				name: 	{value: "vinay2"},
+				age:	{value: 24}
+			});
+	
+	-	When one object variable is assigned to another variable, the reference of that object is passed and not the actual object.
+		So, both the variables point to the same object.
+			var o1 = {age: 23,name:"vinay"};
+			var o2 = o1;	// only the reference to the object is being passed to o2.
+			o1.age = 24;	// changing via one reference will affect in all the referred places.
+			console.log(o1);	{age: 24,name:"vinay"};
+			console.log(o2);	{age: 24,name:"vinay"};
+	
+	-	Even when obj is passed to a function only the reference is passed. What ever changes happen in the function to the object will affect the original object itself.
+		var age = 23;
+		var obj = {place: "Bangalore"};
+
+		function change(a, b){
+			a = 24;
+			b.place = "Bengaluru";
+		}
+
+		change(age, obj);
+
+		console.log(age);   // this is still 23.
+		console.log(obj);	// but this is changed to Bengaluru			
+------------------------------------------------------------------------------------------------------
+
+-	Immediately invoked function expression (IIFE):
+	-	In JS what is wrapped inside a () is treated as an expression.
+	-	Arguments can be passed to the IIFE.
+		(function something(name){
+			console.log("Hello "+ name);
+		})("vinay");
+------------------------------------------------------------------------------------------------------
+
+-	DOM:
+	-	element.textContent gives you only the text inside that element and not the html tags in it. Can also be used to set the same.
+		If you pass html line as the textContent, it'll just print the html line on page instead of loading that element.
+	-	use .innerHTML for getting or setting html element from/to the selected element.
+------------------------------------------------------------------------------------------------------
+
+-	Null coalescing operator (??):
+	-	this only checks a variable for null or undefined.
+		e.g.,
+				let one = false;
+				console.log(one || "haha");	// haha.. This || checks for falsy and truthy.
+				console.log(one ?? "haha");	// false. This ?? checks only for null or undefined.
+------------------------------------------------------------------------------------------------------
+
+-	Optional chaining: this prevents checking for undefined in case of objects and stuff.
+	e.g.,	let obj = {
+					p1:{
+						name:"vin1",
+						age:23,
+						address:{
+							door:99,
+							street:2,
+							city:"home"
+						}
+					},
+					p2:{
+						name:"vin2",
+						age:97
+					}
+				}
+			//	I want to print p4 which is not there in obj. I need to check if p4 is there and then print its properties.
+			console.log(obj.p4 && p4.name);	// undefined.
+			//	In one shot,
+			console.log(obj.p4?.name);	// undefined. If name exist in p4, then return it.
+------------------------------------------------------------------------------------------------------
+
+-	Adding DOM from js:
+		let parentDiv = document.querySelector('.parentDiv');
+		
+		//	create the element to be added.
+		let h2 = document.createElement('h2');	//	<h2></h2>
+		
+		//	add any class if required.
+		h2.classList.add('pageHeading');		//	<h2 class="pageHeading"></h2>
+		
+		//	create the text node to be added inside h2.
+		let heading = document.createTextNode(response.data.heading);	// "Homepage" getting the heading from any response if its coming.
+		
+		//	add this textNode into that h2 element.
+		h2.appendChild(heading);				//	<h2>Homepage</h2>
+		
+	Summary: createElement > createTextNode > appendChild > repeat
+===============================================================================================================
+
+-	General:
+	-	HTTP status codes:
+		-	https://www.restapitutorial.com/httpstatuscodes.html
+===============================================================================================================
+
+-	Hosting in firebase:
+	-	Go to https://console.firebase.google.com/ and create a new project > next > create project > continue.
+	-	Under develop click on *Hosting* > *Get started* > run *npm install -g firebase-tools* from the project root folder > next
+	-	*firebase login* and login using google account > *firebase init* > next
+	-	*firebase deploy* to get the hosting url in the console.
+	-	Follow this for further custom url linking. ( https://www.youtube.com/watch?v=rT-SwD2-8-4 )
+===============================================================================================================
+
+-	JSON:
+	-	Everything is enclosed within one main flower brackets{}.
+	-	It always contains key value pairs. Keys are always enclosed within double quotes followed by colon.
+	-	Value could be string, number, boolean, another object, array.
+	-	{
+			"name":"vinay",
+			"isAlive":true,
+			"nos":[23, 25, 28, 97],
+			"address":{
+				door: "98/B",
+				street: "97th cross",
+				city: "Entaartika"
+			}
+		}
+===============================================================================================================
+
+Callbacks:
+	-	To make a function(A) run only after another function(B) has returned a result, pass A as a param in B function call and execute the function A in the body of B after all the lines.
+	
+Promises:
+	-	In a promise function, if the required condition is satisfied, resolve the promise along with a message.
+		const p1 = new Promise((res, rej)=>{
+			let isEven = Math.floor(Math.random()*(9) + 1);
+			if(isEven % 2 == 0){
+				res("even");
+			}else{
+				rej('odd');
+			}
+		});
+		
+	-	Other ways of making promises:
+		-	const p2 = Promise.resolve('congrats!');
+		-	const p3 = Promise.reject('haha.. FU..');
+		-	const p4 = fetch('https://jsonplaceholder.typicode.com/users').then(re=>re.json());
+		Note: In case of fetch, the response has to be converted into a json format before using it.. Fetch returns a promise.
+		
+	-	Promise.all([p1,p2,p3, p4]).then(msg=>console.log(msg)).catch(msg=>console.log(msg))
+			This takes all the promises in an array and allows for a single .then or.catch statement.
+			It'll only print all the resolve or reject messages in an array and not both.
+			If there is 2 promises resolving and 1 rejecting, it'll only tell the last rejecting promise message.
+			
+Async/Await:
+	-	Use async keyword in front function keyword
+	-	Use await keyword in front of the statement which returns a promise.
+	
+General JS:
+	-	.toString(16); this thing converts numbers to regular string if no param is passed. It also takes optional number system bases.
+		If we give '2', it converts the number to binary and then returns that as a string and so on..
+		let binaryNum = 0b10100;	// 0b indicates that its a binary number.
+		let o = binaryNum.toString(10);	// converting any number to any other number.. Change the base numbers..
+		console.log(o);	//	gives 20.
+		
+	-	bitwise operators (&, |, ^) operates on each individual corresponding bits of two numbers.. 
+	-	left shift operator (<<) shifts the binary bits to the left by said amount.
+		e.g.,	9 << 2: 9 is "1001", so 9 shift left by 2 gives "100100"
+	-	right shift operator (>>) shifts the binary bits to the right by said amount.
+		e.g.,	9 >> 2: 9 is "1001", so 9 shift left by 2 gives "10"
