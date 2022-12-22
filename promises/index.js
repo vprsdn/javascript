@@ -5,7 +5,7 @@ const response2 = fetch("https://jsonplaceholder.typicode.com/posts/1");
 const response3 = axios.get("https://jsonplaceholder.typicode.com/todos/1");
 const response4 = axios.get("https://jsonplaceholder.typicode.com/posts/1");
 
-const resolvedPromisesArray = [Promise.resolve({ name: "vinay", age: 26 }), Promise.reject(44)];
+const resolvedPromisesArray = [Promise.resolve({ name: "vin", age: 26 }), Promise.reject(44)];
 
 function fetchCall() {
 	// Promise.all([response1.then((res) => res.json()), response2.then((res) => res.json())])
@@ -27,7 +27,6 @@ function fetchCall() {
 			console.log(err);
 		})
 		.finally((x) => console.log("finally block", x));
-	// Immediately logging the value of p
 	console.log(p);
 
 	setTimeout(() => {
