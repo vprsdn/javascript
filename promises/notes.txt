@@ -1,13 +1,26 @@
-const username = "vin1";
-const email = "vin1@vin.com";
+Promise.all:
+{
+	-	This will reject as soon as one of the Promises in the array rejects.
+	-	If any one is rejected, it has to be caught in a catch block after Promise.all(...).catch(err => console.log(err))
+}
 
-const isDuplicateUsername = axios.get(`${API}/users_list?username=${username}`);
-const isDuplicateEmail = axios.get(`${API}/users_list?email=${email}`);
-Promise.all([isDuplicateUsername, isDuplicateEmail]).then((response) => {
-	const duplicateUsernameResponse = response[0];
-	const duplicateEmailResponse = response[1];
-	console.log(duplicateUsernameResponse.data);
-	console.log("^^duplicate username check");
-	console.log(duplicateEmailResponse.data);
-	console.log("^^duplicate email check");
-});
+Promise.allSettled:
+{
+	-	This will never reject, it will resolve once all Promises in the array have either rejected or resolved.
+	-	Better to use this.
+}
+
+Promise.any:
+{
+	-	This will resolve all the promises in the array and return only the array with resolved promises.
+}
+
+Promise.catch:
+{
+	-	This gets hit in case of Promise.all.
+}
+
+Promise.race:
+{
+	-	This returns the first promise that gets resolved.
+}
