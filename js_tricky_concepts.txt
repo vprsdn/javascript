@@ -39,12 +39,12 @@ Event Loop
 Loops/Iterations
 {
     Labelled statements/iterators:  A label can be added to the iterators like for, for-in, for-of etc. and that label can be used to continue or break anytime while looping.
-        loop1:  for (let i = 0; i < 5; i++) {
-                    if (i === 1) {
-                        continue loop1;
-                    }
-                    str = str + i;
-                }
+	loop1:  for (let i = 0; i < 5; i++) {
+				if (i === 1) {
+					continue loop1;
+				}
+				str = str + i;
+			}
 
-                console.log(str);   // output: "0234"
+			console.log(str);   // output: "0234"
 }
