@@ -2,7 +2,7 @@ const setTimeoutLogger = (name = "") => {
 	console.log(`Hello ${name}!`);
 };
 
-// const timeoutId = setTimeout(setTimeoutLogger, 2000, "Vinay");
+// const timeoutId = setTimeout(setTimeoutLogger, 2000, "John");
 // clearTimeout(timeoutId);
 
 // const intervalId = setInterval(setTimeoutLogger, 2000, "Vin");
@@ -13,9 +13,9 @@ setTimeout(
 	function run(name = "") {
 		console.log(`Hello ${name}`);
 		setTimeout(() => {
-			run("Vinay");
-		}, 200);
+			run("John");
+		}, 1000);
 	},
 	1000,
-	"Vinay"
+	"John"
 );

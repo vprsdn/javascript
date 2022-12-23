@@ -14,3 +14,8 @@
 
 ### Promise.race:
 - This returns the first promise that gets resolved.
+
+### Promise states:
+- Pending
+- Fulfilled
+- Rejected
