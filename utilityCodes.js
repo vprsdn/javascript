@@ -82,6 +82,7 @@ const hasElementScrollReachedBottom = (element = null) => {
  * value, otherwise, just assign the value to the new object.
  * @param [obj] - The object to be copied.
  * @returns A function that takes an object as an argument and returns a deep copy of that object.
+ * TODO: Another case to copy objects in the arrays.
  */
 const deepCopy = (obj = {}) => {
 	let returnValue = {};
