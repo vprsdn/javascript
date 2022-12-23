@@ -3,7 +3,7 @@
 - If any one is rejected, it has to be caught in a catch block after Promise.all(...).catch(err => console.log(err))
 
 ### Promise.allSettled:
-- This will never reject, it will resolve once all Promises in the array have either rejected or resolved.
+- This will resolve once all Promises in the array have either rejected or resolved.
 - Better to use this.
 
 ### Promise.any:
