@@ -9,13 +9,13 @@ const setTimeoutLogger = (name = "") => {
 // clearInterval(intervalId);
 
 //	SET INTERVAL USING SET TIMEOUT
-setTimeout(
-	function run(name = "") {
-		console.log(`Hello ${name}`);
-		setTimeout(() => {
-			run("John");
-		}, 1000);
-	},
-	1000,
-	"John"
-);
+// setTimeout(
+// 	function run(name = "") {
+// 		console.log(`Hello ${name}`);
+// 		setTimeout(() => {
+// 			run("John");
+// 		}, 1000);
+// 	},
+// 	1000,
+// 	"John"
+// );

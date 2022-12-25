@@ -18,3 +18,11 @@ const intervalId = setInterval(callbackFn, 2000, "John", "Doe", 97, ...);
 -	Timeouts and intervals are functionalities implemented by the browser and are not part of JS itself.
 -	The time delay is the minimum delay that happens and not a guaranteed delay.
 -	Using settimeout to mimic setinterval - https://youtu.be/exBgWAIeIeg?t=781
+
+---
+
+### Event Loop:
+- JS runtime environment
+  - JS Engine
+    - Memory heap: Declared variables go here.
+	- Call stack: Called functions and executions go here and are removed once executed.
