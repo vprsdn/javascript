@@ -338,3 +338,45 @@ const deepCopy = (obj = {}) => {
 	element.focus();
 	element.setSelectionRange(element.value.length, element.value.length);
 }
+
+//	API call abstraction:
+{
+	// GENERIC API CALLING METHOD.
+	const callApi = (api, method, body = {}, headers = {}) => {
+		let fetchOptions = {
+			method,
+			headers,
+		};
+
+		if (method.toLowerCase() !== "get") {
+			fetchOptions["body"] = JSON.stringify(body);
+		}
+
+		return new Promise((resolve, reject) => {
+			fetch(`${api}`, fetchOptions)
+				.then((response) => {
+					return response.json();
+				})
+				.then((responseData) => {
+					resolve(responseData);
+				})
+				.catch((error) => {
+					reject(error);
+				});
+		});
+	};
+
+	// USAGE:
+	const getCallStatus = async (agentId, callSid) => {
+		const method = "POST";
+		const headers = {
+			accept: "application/json",
+			"content-type": "application/json",
+		};
+		const body = {
+			agentId: agentId,
+			callSid: callSid,
+		};
+		return await callApi(`${backendDomain}/v1/twilio/verify-call-status`, method, body, headers);
+	};
+}
