@@ -1,3 +1,8 @@
+- ###	By default JS is synchronous, blocking and single-threaded language.
+
+---
+
+
 ##	Set Timeout:
 -	Syntax:
 ```
