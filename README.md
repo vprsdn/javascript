@@ -88,16 +88,16 @@
 - Value could be string, number, boolean, another object, array.
 
 ```
-{
-	"name": "vinay",
-	"isAlive": true,
-	"nos": [23, 25, 28, 97],
-	"address": {
-		door: "98/B",
-		street: "97th cross",
-		city: "Entaartika"
+	{
+		"name": "vinay",
+		"isAlive": true,
+		"nos": [23, 25, 28, 97],
+		"address": {
+			door: "98/B",
+			street: "97th cross",
+			city: "Entaartika"
+		}
 	}
-}
 ```
 
 > [Go to index](#index)
@@ -147,17 +147,17 @@
 - Read for more info. -> https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Object_initializer#computed_property_names
 
 ```
-const [inputData, setInputData] = useState({
-  name: "a",
-  username: "b",
-  email: "c",
-});
+	const [inputData, setInputData] = useState({
+		name: "a",
+		username: "b",
+		email: "c",
+	});
 
-const handleInputChange = (e) => {
-  let name = e.target.name;
-  let value = e.target.value;
-  setInputData({ ...inputData, [name]: value });
-};
+	const handleInputChange = (e) => {
+		let name = e.target.name;
+		let value = e.target.value;
+		setInputData({ ...inputData, [name]: value });
+	};
 ```
 
 > [Go to index](#index)
