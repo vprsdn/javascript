@@ -22,24 +22,27 @@
 ### JS engine:
 
 - Consist of,
-  - heap (memory for storing variables)
-  - call stack (js code gets executed)
+  - memory heap - memory for storing variable and function declarations.
+  - call stack - when code is executed, functions are pushed to the callstack and is popped once the function returns. LIFO.
 
-### Web APIs:
+### Web/Browser APIs:
 
-- Consist of,
-  - DOM
-  - Timers (setTimeout, setInterval)
-  - Promises
-  - Browser storage
+- DOM
+- Timers (setTimeout, setInterval)
+- Promises
+- XHR Requests
+- Browser storage
 
 ### Queues:
 
+- Callback/Task queue (for timers)
+- Microtask queue (for promises)
 - Place where async tasks wait before their execution
 
 ### Event loop:
 
-- This thing ensures async tasks are executed in the right order.
+- Constantly checks callstack, checks callback queue, push if callstack is empty.
+- This ensures async tasks are executed in the right order.
 
 > [Go to index](#index)
 
@@ -47,7 +50,30 @@
 
 ## Asynchronous JavaScript:
 
-- https://www.youtube.com/watch?v=exBgWAIeIeg&t=3308s
+- Execution starts with global scope, so `global()` gets pushed to the callstack first and gets removed last.
+
+### Set Timeout flow:
+
+- Whenever the callstack encounters a setTimeout, the callback function and the timer is sent to the web API and setTimeout is removed from the callstack. Controls continues with the next lines of code.
+- The web API starts the timer for given time in the background.
+- Once the timer is up, the callback function gets sent to the callback queue.
+- Now the event loop checks callstack, checks callback queue, push the function from callback queue to the callstack if callstack is empty.
+
+### Promise flow:
+
+- Whenever the callstack encounters a promise, the fetch function and the url is sent to the web API.
+- This would create a promise object in the memory heap. This contains the promise value and onFulfilment and onRejected placeholders.
+- .then and .catch lines would send the callback functions to the placeholders created in previous step.
+- Once fetch returns the value, the promise value is set in the promise object. Now the callback functions and the value is sent to the microtask queue.
+- Now the event loop checks callstack, checks microtask queue, push the function from microtask queue to the callstack if callstack is empty.
+
+### Note:
+
+- If both the queues, callback queue and microtask queue contains functions to execute, JS/event loop prioritizes the microtask queue and pushes that function to the callstack.
+
+### Reference:
+
+- [Youtube - Codevolution](https://www.youtube.com/watch?v=exBgWAIeIeg)
 
 > [Go to index](#index)
 
