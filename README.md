@@ -27,17 +27,19 @@
 
 ### Web/Browser APIs:
 
-- DOM
-- Timers (setTimeout, setInterval)
-- Promises
-- XHR Requests
-- Browser storage
+- Consist of,
+  - DOM
+  - Timers (setTimeout, setInterval)
+  - Promises
+  - XHR Requests
+  - Browser storage
 
 ### Queues:
 
-- Callback/Task queue (for timers)
-- Microtask queue (for promises)
 - Place where async tasks wait before their execution
+- Consist of,
+  - Callback/Task queue (for timers)
+  - Microtask queue (for promises)
 
 ### Event loop:
 
