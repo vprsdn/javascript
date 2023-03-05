@@ -412,3 +412,134 @@ const deepCopy = (obj = {}) => {
     );
   };
 }
+
+//	Common validator:
+{
+  const validate = (config = {}, data = {}) => {
+    console.log("common validator");
+    let result = { isValid: true, error: {} };
+
+    for (const field in config) {
+      const validations = config[field];
+      //	If error found in one validation, do not check further validations for the same field. So break fieldsLoop;
+      fieldsLoop: for (const validation in validations) {
+        const validationConfig = validations[validation];
+        switch (validation) {
+          case "required":
+            if (
+              validationConfig &&
+              (data[field] === undefined || data[field].length == 0)
+            ) {
+              const errorMessage = validationMessages.required[field];
+              result["isValid"] = false;
+              result.error[field] = errorMessage;
+              break fieldsLoop;
+            } else {
+              if (data[field] === undefined) {
+                break fieldsLoop;
+              }
+            }
+            break;
+
+          case "minLength":
+            if (data[field] && data[field].length < validationConfig) {
+              const errorMessage = validationMessages.minLength[field].replace(
+                ":MIN_LENGTH",
+                config[field][validation]
+              );
+              result["isValid"] = false;
+              result.error[field] = errorMessage;
+              break fieldsLoop;
+            }
+            break;
+
+          case "maxLength":
+            if (data[field] && data[field].length > validationConfig) {
+              const errorMessage = validationMessages.maxLength[field].replace(
+                ":MAX_LENGTH",
+                config[field][validation]
+              );
+              result["isValid"] = false;
+              result.error[field] = errorMessage;
+              break fieldsLoop;
+            }
+            break;
+
+          case "min":
+            if (data[field] !== undefined && data[field] < validationConfig) {
+              const errorMessage = validationMessages.min[field].replace(
+                /:MIN|:MAX/g,
+                (m) => {
+                  return config[field][m.substring(1).toLowerCase()];
+                }
+              );
+              result["isValid"] = false;
+              result.error[field] = errorMessage;
+              break fieldsLoop;
+            }
+            break;
+          case "max":
+            if (data[field] !== undefined && data[field] > validationConfig) {
+              const errorMessage = validationMessages.max[field].replace(
+                /:MIN|:MAX/g,
+                (m) => {
+                  return config[field][m.substring(1).toLowerCase()];
+                }
+              );
+              result["isValid"] = false;
+              result.error[field] = errorMessage;
+              break fieldsLoop;
+            }
+            break;
+
+          case "regex":
+            if (data[field] && !data[field].match(validationConfig)) {
+              const errorMessage =
+                validationMessages.regex[field] ||
+                validationMessages.regex["generic"];
+              result["isValid"] = false;
+              result.error[field] = errorMessage;
+              break fieldsLoop;
+            }
+            break;
+
+          default:
+            break;
+        }
+      }
+    }
+
+    console.log(">> | file: common.js:83 | result:", result);
+    return result;
+  };
+
+  //	Usage:
+  function validateUserInputForAddCategory(data = {}) {
+    console.log("validateUserInputForAddCategory");
+
+    const config = {
+      name: {
+        required: true,
+        minLength: 3,
+        maxLength: 64,
+      },
+      description: {
+        required: false,
+        minLength: 12,
+        maxLength: 64,
+      },
+      parentCategory: {
+        required: false,
+        minLength: 3,
+        maxLength: 64,
+      },
+      categoryType: {
+        required: false,
+        minLength: 3,
+        maxLength: 64,
+      },
+    };
+
+    return commonUtilities.validate(config, data);
+  }
+}
