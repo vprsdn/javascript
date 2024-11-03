@@ -322,11 +322,24 @@ const comicData = (await Promise.all(comicPromises)).map((res) => res.data);
 ```
 const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-const promises = arr.map((n) => {
+const promises1 = arr.map((n) => {
   return axios.get(`https://xkcd.com/${n}/info.0.json`);	//	Does not wait if it is awaited here.
 });
-const x = (await Promise.all(promises)).map((res) => res.data.title);
+const x = (await Promise.all(promises1)).map((res) => res.data.title);
 console.log(x);
+```
+
+- Any awaits inside the map item will be executed in that order. Nothing needs to be returned in this type of mapping of promises.
+- The promises are executed parallely for all items in the array, but for each item, the order of calls is maintained.
+
+```
+const promises2 = arr.map(async (item) => {
+  const callOneResponse = await makeCallOne(item);
+  const callTwoResponse = await makeCallTwo(callOneResponse);
+  const callThreeResponse = await makeCallThree(callTwoResponse);
+});
+
+await promise.all(promises2);
 ```
 
 ## for-of
